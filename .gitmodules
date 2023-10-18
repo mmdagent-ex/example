@@ -1,0 +1,6 @@
+[submodule "gene"]
+	path = gene
+	url = https://github.com/mmdagent-ex/gene.git
+[submodule "uka"]
+	path = uka
+	url = https://github.com/mmdagent-ex/uka.git
