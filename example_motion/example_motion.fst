@@ -1,5 +1,5 @@
 0 LOOP:
-    <eps> STAGE|../images/floor_green.png,../images/back_white.png
+    <eps> STAGE|../images/floor_block.png,../images/back_white.png
     <eps> MODEL_ADD|gene|../gene/gene.pmd
     MODEL_EVENT_ADD|gene  MOTION_ADD|gene|base|walk.vmd|FULL|LOOP|ON|OFF
     <eps> CAMERA|0,11.25,0|13.5,-50.0,0|46.4|27.0
