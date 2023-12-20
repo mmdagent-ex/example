@@ -6,3 +6,6 @@
 
 LOOP LOOP:
     KEY|1 SYNTH_START|0|mei_voice_normal|こんにちは！よろしくね！
+
+LOOP LOOP:
+    KEY|2 SYNTH_START|0|slt_voice_normal|"Hello! My name is gene. How can I help you?"
