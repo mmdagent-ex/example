@@ -1,2 +1,14 @@
-# main.mdf
+#### main.mdf
+####
+#### Below are example settings used in the Tutorial
+####
 
+#### Speech recognition
+#Plugin_Julius_lang=ja
+#Plugin_Julius_conf=dnn
+
+#### Delete caption
+#show_caption=false
+
+#### Submodule setting
+#Plugin_AnyScript_Command=python.exe -u test.py
