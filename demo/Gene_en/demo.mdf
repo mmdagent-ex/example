@@ -1,0 +1,12 @@
+#### demo.mdf
+
+#### Speech recognition
+## Japanese demo
+#Plugin_Julius_lang=ja
+#Plugin_Julius_conf=dnn
+## English demo
+Plugin_Julius_lang=en
+Plugin_Julius_conf=dnn
+
+#### Delete caption
+#show_caption=false
