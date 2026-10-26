@@ -1,0 +1,55 @@
+# Publish example.zip (this repository with the gene / uka submodules included)
+# as a GitHub Release, so that users without git can download a complete copy.
+#
+#   - push a tag  v*         -> release named after the tag
+#   - Run workflow (Actions) -> release named after the given tag
+#
+# The asset name is fixed (example.zip), so the latest copy is always at
+# https://github.com/mmdagent-ex/example/releases/latest/download/example.zip
+name: release-zip
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag, e.g. v1.0 (created at the current commit if missing)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          path: example
+
+      - name: Build example.zip
+        run: |
+          set -eu
+          # drop git metadata (the submodule .git entries are files, the top one is a directory)
+          find example -name .git -prune -exec rm -rf {} +
+          rm -rf example/.github example/.gitmodules
+          zip -r -q example.zip example
+          unzip -l example.zip | tail -1
+          test -f example/gene/Gene.pmd
+          test -f example/main.mdf
+
+      - name: Create or update the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          NOTES="Complete copy of the Example asset (gene and uka submodules included). Unzip and open example/main.mdf with MMDAgent-EX."
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" example.zip --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$TAG" example.zip --title "Example $TAG" --notes "$NOTES" \
+              --target "$GITHUB_SHA" --repo "$GITHUB_REPOSITORY"
+          fi
